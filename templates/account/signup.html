@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load allauth i18n %}
+{% load socialaccount %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css"
+      rel="stylesheet"
+    />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  </head>
+<body>
+    {% url 'account_signup' as action_url %}
+    <div class="container my-5 w-25">
+        <form method="post" class="login" action="{{ action_url }}">
+            {% csrf_token %}
+            
+            {% with form.username as username_input %}
+                <div class="form-outline mb-4">
+                    <input type="{{ username_input.field.widget.input_type }}"
+                           id="{{ username_input.id_for_label }}"
+                           class="form-control"
+                           name="{{ username_input.name }}"
+                           {% if username_input.field.required %}required{% endif %} />
+                    <label class="form-label" for="{{ username_input.id_for_label }}">{{ username_input.label }}</label>
+                    {{ form.username.errors|safe }}
+                </div>
+            {% endwith %}
+
+            {% with form.email as email_input %}
+                <div class="form-outline mb-4">
+                    <input type="{{ email_input.field.widget.input_type }}"
+                           id="{{ email_input.id_for_label }}"
+                           class="form-control"
+                           name="{{ email_input.name }}"
+                           {% if email_input.field.required %}required{% endif %} />
+                    <label class="form-label" for="{{ email_input.id_for_label }}">{{ email_input.label }}</label>
+                    {{ form.email.errors|safe }}
+                </div>
+            {% endwith %}
+
+            {% with form.password1 as password_input %}
+                <div class="form-outline mb-4">
+                    <input type="{{ password_input.field.widget.input_type }}"
+                           id="{{ password_input.id_for_label }}"
+                           class="form-control"
+                           name="{{ password_input.name }}"
+                           {% if password_input.field.required %}required{% endif %} />
+                    <label class="form-label" for="{{ password_input.id_for_label }}">{{ password_input.label }}</label>
+                    {{ form.password1.errors|safe }}
+                </div>
+            {% endwith %}
+
+            {% with form.password2 as password_confirm_input %}
+                <div class="form-outline mb-4">
+                    <input type="{{ password_confirm_input.field.widget.input_type }}"
+                           id="{{ password_confirm_input.id_for_label }}"
+                           class="form-control"
+                           name="{{ password_confirm_input.name }}"
+                           {% if password_confirm_input.field.required %}required{% endif %} />
+                    <label class="form-label" for="{{ password_confirm_input.id_for_label }}">{{ password_confirm_input.label }}</label>
+                    {{ form.password2.errors|safe }}
+                </div>
+            {% endwith %}
+        
+                <button class="btn btn-primary w-100 py-3 bg-accent" type="submit">
+                Sign Up
+                </button>
+            
+             <div class="text-center">
+                <p>Have an account? <a href="{% url 'account_login' %}" class="text-blue-500 hover:underline">Sign In</a></p>
+                <p>or sign up with:</p>
+                 <button type="button" class="btn btn-link btn-floating mx-1">
+                    <a href="{% provider_login_url 'google' %}">
+                      <i class="fab fa-google fa-2x hover:text-yellow-500 transition duration-300 transform hover:scale-110"></i>
+                    </a>
+                 </button>
+             </div>
+        </form>
+    </div>
+<script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"
+    ></script>
+  </body>
+</html>
+{% endblock %}

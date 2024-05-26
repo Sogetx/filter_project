@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}My Account{% endblock %}
+
+{% block content %}
+<h1>My Account</h1>
+<p>Email: {{ user.email }}</p>
+<a href="{% url 'account_email' %}" class="text-blue-500 hover:underline">Change Email</a>
+
+<form method="post" action="{% url 'account_change_name' %}">
+  {% csrf_token %}
+  <label for="first_name">First Name:</label>
+  <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" onchange="this.form.submit()"><br>
+
+  <label for="last_name">Last Name:</label>
+  <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" onchange="this.form.submit()"><br>
+</form>
+
+<h2>Change Password</h2>
+<a href="{% url 'account_change_password' %}" class="text-blue-500 hover:underline">Change Password</a>
+{% endblock %}

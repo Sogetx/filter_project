@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Фільтри Онлайн{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <style>
+        html, body {
+            height: 100%;
+        }
+        .wrapper {
+            min-height: 94.6%;
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex-grow: 1;
+        }  
+        footer {
+             margin-top: auto;
+        }
+        
+            .rating {
+                width: auto;
+                height: auto;
+                margin-left: 0;
+            }
+            
+            .rating label {
+                float: right;
+                position: relative;
+                width: 40px;
+                height: 40px;
+                cursor: pointer;
+                margin-bottom: 10px; /* Додано відступ між рейтингом і полем тексту */
+            }
+            
+            .rating label:not(:first-of-type) {
+                padding-right: 2px;
+            }
+            
+            .rating label:before {
+                content: "\2605";
+                font-size: 42px;
+                color: #ccc;
+                line-height: 1;
+            }
+            
+            .rating input {
+                display: none;
+            }
+            
+            .rating input:checked ~ label:before,
+            .rating:not(:checked) > label:hover:before,
+            .rating:not(:checked) > label:hover ~ label:before {
+                color: #f9df4a;
+            }
+            .comment-form .mt-4 {
+                margin-top: 10px; /* Зменшено відстань від рейтингу до поля тексту */
+            }
+            
+            .comment-form textarea {
+                width: 100%;
+                padding: 10px;
+                border: 3px solid #ccc;
+                border-radius: 5px;
+                margin-top: 10px; /* Додано відстань від рейтингу до поля тексту */
+            }
+            
+            .comment_rating {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+            
+            .comment_rating label {
+                float: right;
+                cursor: default;
+                font-size: 24px;
+                color: #ccc;
+                margin-right: 5px;
+            }
+            
+            
+            
+            .comment_rating {
+                font-size: 24px; /* Розмір зірок */
+                color: #ccc; /* Колір за замовчуванням */
+            }
+            
+            .comment_rating .checked {
+                color: #f9df4a; /* Колір для вибраних зірок */
+            }
+
+    </style>
+</head>
+<body class="flex-col min-h-screen font-sans bg-gray-100">
+<link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <div class="wrapper">
+        <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
+            {% if request.user.is_staff %}
+                <h1 class="m-0 text-lg"><a href="{% url 'admin:index' %}" class="px-6 py-3 text-lg font-semibold bg-blue-500 rounded hover:bg-red-700">ADMIN PAGE</a></h1>
+            {% else %}
+                <h1 class="m-0 text-lg">Магазин Фільтрів</h1>
+            {% endif %}
+            <nav class=" ml-40 mt-2">
+                <ul class="flex">
+                    <li class="mr-6 text-lg"><a href="{% url 'index' %}" class="text-white hover:text-xl">Головна</a></li>
+                    <li class="mr-6 text-lg"><a href="{% url 'configurator' %}" class="text-white">Конфігуратор</a></li>
+                    <li class="text-lg"><a href="{% url 'filter' %}" class="text-white">Пошук</a></li>
+                </ul>
+            </nav>
+            
+            <div class="space-x-6">
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'cart' %}" class="px-6 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:teal-700"> <i class="fas fa-cart-shopping fa-xl hover:text-green-400 transition duration-300 transform hover:scale-110" ></i></a>
+                        <a href="{% url 'account_info' %}" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700"> <i class="fas fa-circle-user fa-2xl hover:text-green-400 duration-300 transform hover:scale-110"></i></a>
+                        <a href="{% url 'signout' %}" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Sign out</a>
+                    {% else %}
+                        <a href="{% url 'account_login' %}" class="px-6 py-3 text-lg font-semibold bg-gray-600 text-white rounded-xl hover:bg-green-700">Sign In</a>
+                    {% endif %}
+            </div>
+        </header>
+    
+        <main class="flex-grow p-4">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    <footer class="bg-gray-800 text-white p-4 text-center">
+        <p>&copy; 2024 Фільтри Онлайн</p>
+        <!--Start of Tawk.to Script-->
+        <script type="text/javascript">
+        var Tawk_API=Tawk_API||{};
+            Tawk_API.visitor = {
+            name : '{{ user.first_name }} {{ user.last_name }}' ,
+            email : '{{ user.email }}'
+            }; 
+        Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/660d81af1ec1082f04de78b8/1hqic55dd';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+        </script>
+    <!--End of Tawk.to Script-->
+    </footer>
+</body>
+</html>

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Configurator {% endblock %}
+{% block content %}
+    <form method="post" action="{% url 'configurator' %}" class= "bg-gray-50 rounded-xl shadow-md p-6">
+    <h2 class="mb-6 text-2xl">Опції конфігуратора</h2>
+    {% csrf_token %}
+    {{ form.as_p }}
+        <button type="submit" class="inline-flex items-center mt-3 px-6 py-3 rounded-md font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none">Find Items</button>
+    </form>
+    <ul>
+        {% if categories %}
+            <div class="mt-6 px-6 py-3">
+                <div class="bg-gray-50 shadow-md p-6 rounded-xl">
+                <h2 class="mb-12 text-2xl text-center">Категорії</h2>
+                    <div class="grid grid-cols-3 gap-3 bg-gray-50">
+                        {% for category in categories %}
+                            <div class="rounded-xl bg-white shadow-md p-6 transform hover:scale-105 mx-2">
+                                <a href="{% url 'configurator_by_category' category.id %}">
+                                    <div class="p-6 bg-white rounded-b-xl">
+                                         <h2 class="text-2xl"><a href="{% url 'configurator_by_category' category.id %}" class="text-indigo-600 hover:text-indigo-900">{{ category.name }}</a></h2>
+                                          <p>Number of Items: {{ category.num_items }}</p>
+                                                {% if category.heatattention %}
+                                                        <span class="text-red-500"> Деяке обладнання потребує встановлення охолоджувальної камери. </span>
+                                                {% endif %}
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="mt-6 px-6 py-5 bg-gray-50 shadow-md p-6 rounded-xl">
+                    <h2 class="mb-12 text-2xl text-center">Обладнання</h2>
+                    <div class="grid grid-cols-4 gap-3">
+                            {% for item in items %}
+                                <div class="bg-white shadow-md p-6 rounded-xl  transform hover:scale-105 mx-2">
+                                    <a href="{% url 'detail' item.id %}">
+                                        <div>
+                                            <img src="{{ item.image.url }}" class="rounded-t-xl w-80 h-40 object-scale-down">
+                                        </div>
+            
+                                    <div class="p-6 bg-white rounded-b-xl ">
+                                        <h2 class="text-2xl">{{ item.name }}</h2>
+                                             <div class="flex items-center justify-between">
+                                                <div>
+                                                    {% if item.heatattention %}
+                                                        <div class="alert alert-warning">
+                                                            <h2 class="text-red-500"> Потрібно встановити охолоджувальну камеру. </h2>
+                                                        </div>
+                                                    {% endif %}
+                                                    <p class="text-gray-500">Price: {{ item.price }}</p>
+                                                    <p class="text-gray-500">Rating: {{ item.average_rating|floatformat:2 }}</p>
+                                                    
+                                                    <span class="comment_rating">
+                                                        {% for i in "x"|ljust:5 %}
+                                                            {% if forloop.counter <= item.average_rating %}
+                                                                <span class="star checked">&#9733;</span>
+                                                            {% else %}
+                                                                <span class="star">&#9733;</span>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </span>
+                                                </div>
+                                                <form action="{% url 'add_to_cart' item.id %}" method="post">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="bg-blue-700 hover:bg-green-700 text-white font-bold py-7 px-7 rounded-full"><i class="fas fa-cart-plus fa-2xl"></i></button>
+                                                </form>
+                                             </div>
+                                    </div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                </div>
+            </div>
+        {% else %}
+                <p>No categories found.</p>
+        {% endif %}
+    </ul>
+    
+{% endblock %}

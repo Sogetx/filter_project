@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a1da7771-49e5-4155-af1e-22c4cfb339dc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/filter_project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/filter_project.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="HTML File" />
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="master" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Sogetx&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Sogetx/filter_project&quot;,
+    &quot;accountId&quot;: &quot;bf574d89-1976-4a47-bced-9a2c95c33438&quot;
+  }
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MigrationScriptOptions">
+    <option name="ignoreImplicitObjects" value="true" />
+    <option name="ignoreSourceCode" value="false" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2XOyfhxDPzrus9MPpqzOltf3zzA" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Django Server.filt_proj.executor": "Run",
+    "Django Server.filter_project.executor": "Run",
+    "Django Server.web_test.executor": "Run",
+    "JavaScript Debug.base.html.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
+    "database.data.extractors.current.export.id": "SQL Inserts",
+    "django.template.preview.state": "SHOW_EDITOR",
+    "git-widget-placeholder": "test",
+    "last_opened_file_path": "C:/Games/Test/filter_project/filter_project/settings.py",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.intellij.python.django.customization.DjangoModulesConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite",
+      "mysql",
+      "postgresql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Games\Test\web_test\templates" />
+      <recent name="C:\Games\Test\web_test\templates\account" />
+      <recent name="C:\Games\Test\web_test\Fan_market" />
+      <recent name="C:\Games\Test\web_test\web_test" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Games\Test\web_test\web_test" />
+      <recent name="C:\Games\Test\web_test\templates\web_view" />
+      <recent name="C:\Games\Test\web_test\templates\web_view\accounts" />
+      <recent name="C:\Games\Test\web_test\templates\first_website" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Django Server.filt_proj">
+    <configuration name="Test: first_website" type="DjangoTestsConfigurationType" temporary="true">
+      <module name="filter_project" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="first_website" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="base.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/web_test/templates/base.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="views" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="filter_project" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Fan_market" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <EXTENSION ID="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </EXTENSION>
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Fan_market/views.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
+      <module name="filter_project" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Games\Test\web_test\venv\Scripts\python.exe" />
+      <option name="SDK_NAME" value="Python 3.11 (filter_project)" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </EXTENSION>
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="filt_proj" type="Python.DjangoServer" factoryName="Django server">
+      <module name="filter_project" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="filter_project.settings" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Games\Test\web_test\venv\Scripts\python.exe" />
+      <option name="SDK_NAME" value="Python 3.11 (filter_project) (2)" />
+      <option name="WORKING_DIRECTORY" value="C:\Games\Test\filter_project" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </EXTENSION>
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="localhost" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Django Server.filt_proj" />
+      <item itemvalue="Django tests.Test: first_website" />
+      <item itemvalue="JavaScript Debug.base.html" />
+      <item itemvalue="Python.views" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.base.html" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-PY-241.15989.155" />
+        <option value="bundled-python-sdk-babbdf50b680-7c6932dee5e4-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-241.15989.155" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a1da7771-49e5-4155-af1e-22c4cfb339dc" name="Changes" comment="" />
+      <created>1698514525719</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1698514525719</updated>
+      <workItem from="1698514538570" duration="10920000" />
+      <workItem from="1698613226268" duration="5568000" />
+      <workItem from="1705489435915" duration="66000" />
+      <workItem from="1705489515514" duration="2024000" />
+      <workItem from="1705667663301" duration="6963000" />
+      <workItem from="1705687005917" duration="11333000" />
+      <workItem from="1705770887784" duration="6086000" />
+      <workItem from="1705777838683" duration="47000" />
+      <workItem from="1705834248717" duration="2831000" />
+      <workItem from="1705909883858" duration="8261000" />
+      <workItem from="1706352269621" duration="3770000" />
+      <workItem from="1706556572947" duration="2689000" />
+      <workItem from="1706612837344" duration="8057000" />
+      <workItem from="1706635374077" duration="4643000" />
+      <workItem from="1706784846781" duration="10934000" />
+      <workItem from="1706812555746" duration="7649000" />
+      <workItem from="1706820274604" duration="3476000" />
+      <workItem from="1706871582678" duration="12991000" />
+      <workItem from="1706894844188" duration="14625000" />
+      <workItem from="1707150665002" duration="2979000" />
+      <workItem from="1707218026229" duration="11610000" />
+      <workItem from="1707235844718" duration="7800000" />
+      <workItem from="1707309717616" duration="5760000" />
+      <workItem from="1707565991471" duration="8600000" />
+      <workItem from="1707584211876" duration="10480000" />
+      <workItem from="1707757180858" duration="757000" />
+      <workItem from="1707822242608" duration="11790000" />
+      <workItem from="1707842302314" duration="11831000" />
+      <workItem from="1707855700078" duration="43000" />
+      <workItem from="1707996924856" duration="10370000" />
+      <workItem from="1708025320113" duration="1827000" />
+      <workItem from="1708361565045" duration="156000" />
+      <workItem from="1708362905311" duration="200000" />
+      <workItem from="1708445804210" duration="1293000" />
+      <workItem from="1708447534747" duration="2953000" />
+      <workItem from="1708518035063" duration="6903000" />
+      <workItem from="1708534316677" duration="3493000" />
+      <workItem from="1708603930467" duration="7927000" />
+      <workItem from="1708620918989" duration="467000" />
+      <workItem from="1708621400231" duration="8557000" />
+      <workItem from="1708635071276" duration="2882000" />
+      <workItem from="1708638049596" duration="105000" />
+      <workItem from="1708773833680" duration="902000" />
+      <workItem from="1708779351716" duration="1766000" />
+      <workItem from="1710265010166" duration="2047000" />
+      <workItem from="1710267075007" duration="479000" />
+      <workItem from="1710670741452" duration="7004000" />
+      <workItem from="1710692677468" duration="2037000" />
+      <workItem from="1710868945382" duration="4268000" />
+      <workItem from="1711462819517" duration="839000" />
+      <workItem from="1712148700036" duration="2565000" />
+      <workItem from="1712159615129" duration="5734000" />
+      <workItem from="1712170054044" duration="641000" />
+      <workItem from="1712421530823" duration="3254000" />
+      <workItem from="1712935951567" duration="7682000" />
+      <workItem from="1712945198251" duration="1960000" />
+      <workItem from="1712947723192" duration="6476000" />
+      <workItem from="1713357372504" duration="2158000" />
+      <workItem from="1713370936194" duration="9787000" />
+      <workItem from="1713433194474" duration="115000" />
+      <workItem from="1713520293073" duration="3144000" />
+      <workItem from="1713529250519" duration="4546000" />
+      <workItem from="1713790642083" duration="3526000" />
+      <workItem from="1713797970648" duration="14889000" />
+      <workItem from="1713868519966" duration="9725000" />
+      <workItem from="1713891293737" duration="349000" />
+      <workItem from="1713892663576" duration="6280000" />
+      <workItem from="1714041164604" duration="2193000" />
+      <workItem from="1714124411363" duration="2271000" />
+      <workItem from="1714126720235" duration="7787000" />
+      <workItem from="1714135547469" duration="25000" />
+      <workItem from="1714150178439" duration="7101000" />
+      <workItem from="1714904636136" duration="2930000" />
+      <workItem from="1714907590119" duration="2704000" />
+      <workItem from="1714912601289" duration="10223000" />
+      <workItem from="1715086791620" duration="1894000" />
+      <workItem from="1715099628473" duration="19995000" />
+      <workItem from="1715173075110" duration="2217000" />
+      <workItem from="1715190472246" duration="1349000" />
+      <workItem from="1715192162898" duration="3415000" />
+      <workItem from="1715197449241" duration="969000" />
+      <workItem from="1715245739499" duration="14372000" />
+      <workItem from="1715268600218" duration="4478000" />
+      <workItem from="1715334431650" duration="4162000" />
+      <workItem from="1715680390234" duration="11505000" />
+      <workItem from="1715778810230" duration="382000" />
+      <workItem from="1715779211998" duration="6000" />
+      <workItem from="1715880271404" duration="5868000" />
+      <workItem from="1715889662381" duration="7001000" />
+      <workItem from="1715947407741" duration="4916000" />
+      <workItem from="1715959143877" duration="6112000" />
+      <workItem from="1716204038951" duration="7358000" />
+      <workItem from="1716234274622" duration="6964000" />
+      <workItem from="1716282478592" duration="5393000" />
+      <workItem from="1716306517818" duration="367000" />
+      <workItem from="1716376761753" duration="5147000" />
+      <workItem from="1716395755239" duration="9519000" />
+      <workItem from="1716449680579" duration="7553000" />
+      <workItem from="1716487172151" duration="9015000" />
+      <workItem from="1716544736514" duration="8575000" />
+      <workItem from="1716566699430" duration="6612000" />
+      <workItem from="1716584451120" duration="1361000" />
+      <workItem from="1716626409252" duration="6266000" />
+      <workItem from="1716739920934" duration="6242000" />
+      <workItem from="1716752184365" duration="2367000" />
+      <workItem from="1716754616414" duration="594000" />
+      <workItem from="1716755241149" duration="243000" />
+      <workItem from="1716755493437" duration="1571000" />
+    </task>
+    <task id="LOCAL-00001" summary="Add code">
+      <option name="closed" value="true" />
+      <created>1716753629527</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1716753629528</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add code" />
+  </component>
+</project>

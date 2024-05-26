@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+
+{% block title %}Головна{% endblock %}
+ <style>
+.rating {
+    width: auto;
+    height: auto;
+    margin-left: 0;
+}
+
+.rating label {
+    float: right;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.rating label:not(:first-of-type) {
+    padding-right: 2px;
+}
+
+.rating label:before {
+    content: "\2605";
+    font-size: 42px;
+    color: #ccc;
+    line-height: 1;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating input:checked ~ label:before,
+.rating:not(:checked) > label:hover:before,
+.rating:not(:checked) > label:hover ~ label:before {
+    color: #f9df4a;
+}
+
+/* Поле тексту */
+.comment-form .mt-4 {
+    margin-top: 10px; 
+}
+
+.comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 3px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px; 
+}
+
+.comment_rating {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.comment_rating label {
+    float: right;
+    cursor: default;
+    font-size: 24px;
+    color: #ccc;
+    margin-right: 5px;
+}
+
+
+
+.comment_rating {
+    font-size: 24px; 
+    color: #ccc; 
+}
+
+.comment_rating .checked {
+    color: #f9df4a; 
+}
+
+
+ </style>
+
+<style>
+    .tab-button {
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 20px;
+        margin-right: 10px;
+        background-color: #fff;
+        color: black;
+        border: 2px solid #70F6F3;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .tab-button:hover {
+        background-color: #4299e1;
+        color: white;
+        border-color: lightblue;
+    }
+
+    .tab-button.active {
+        background-color: #3B82F6;
+        color: white;
+        border-color: #3B82F6;
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+</style>
+
+{% block content %}
+<div class="container mx-auto py-8">
+    <!-- Пошукова стрічка -->
+    <div class="mb-8">
+        <form method="get" action="{% url 'filter' %}" class="flex items-center justify-center">
+            <input name="query" class="w-full py-2 px-6 text-lg border rounded-xl" type="text" value="{{ query }}"  placeholder="Enter your prompt">
+        </form>
+    </div>
+
+    <!-- Вкладки з категоріями та компаніями -->
+    <div class="mt-6 px-6 py-12 bg-gray-50 rounded-xl shadow-xl">
+        <h2 class="mb-5 text-2xl text-center">Категорії</h2>
+        <div class="grid grid-cols-4 gap-3">
+            {% for category in categories %}
+                  <div class="shadow-xl bg-white rounded-xl hover:bg-gray-100 transform hover:scale-105 mx-3">
+                    <a href="{% url 'filter' %}?category={{ category.id }}" class="block p-4 rounded-xl text-center">
+                        <div class="p-6 bg-white rounded-b-xl">
+                            <h2 class="text-2xl">{{ category.name }}</h2>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>   
+
+    <div class="mt-6 px-6 py-12 bg-gray-50 rounded-xl shadow-xl">
+            <h2 class="mb-5 text-2xl text-center">Компанії</h2>
+            <div class="grid grid-cols-4 gap-3">
+                {% for company in companies %}
+                    <div class="shadow-xl bg-white rounded-xl hover:bg-gray-100 transform hover:scale-105 mx-3">
+                        <a href="{% url 'filter' %}?company={{ company.id }}" class="block p-4 rounded-xl text-center">
+                            <div class="p-6 rounded-b-xl focus:bg-violet-600">
+                                <h2 class="text-2xl">{{ company.name }}</h2>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const buttons = document.querySelectorAll('.tab-button');
+        const tabs = document.querySelectorAll('.tab-content');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.id.replace('tab-', '');
+                const tab = document.getElementById(tabId);
+
+                buttons.forEach(btn => btn.classList.remove('active'));
+                tabs.forEach(tab => tab.classList.remove('active'));
+
+                button.classList.add('active');
+                tab.classList.add('active');
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,295 @@
+{% extends 'base.html' %}
+{% block title %}Фільтр{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-/tbHFU4BmSC17QvYls3T61CxJLjbyUxMVyTsnKowjQD6Hxt+re/E0zxc4Utd4F/SjG3Zvyy37Bu7XIGLsZZ9Jg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <div class="grid grid-cols-8 gap-4 bg-gray-100 p-1 rounded-xl flex">
+         <div class="col-span-2 bg-white rounded-xl shadow-md p-6 flex flex-col">
+            <div>
+                <p class="font-semibold">Categories</p>
+                    <ul>
+                        {% for category in categories %}
+                            <li class="py-2 px-2 rounded-xl{% if category.id == category_id %} bg-gray-200{% endif %}">
+                                <a href="{% url 'filter' %}?query={{ query }}&category={{ category.id }}{% if company_id %}&company={{ company_id }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}{% for dust_id in dust_ids %}&dust={{ dust_id }}{% endfor %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if min_particle_size %}&min_particle_size={{ min_particle_size }}{% endif %}{% if max_particle_size %}&max_particle_size={{ max_particle_size }}{% endif %}{% if cleaning_efficiency %}&cleaning_efficiency={{ cleaning_efficiency }}{% endif %}{% if temperature %}&temperature={{ temperature }}{% endif %}{% if concentration %}&concentration={{ concentration }}{% endif %}">
+                                    {{ category.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                <p class="font-semibold mt-4">Companies</p>
+                    <ul>
+                        {% for company in companies %}
+                            <li class="py-2 px-2 rounded-xl{% if company.id == company_id %} bg-gray-200{% endif %}">
+                                <a href="{% url 'filter' %}?query={{ query }}&company={{ company.id }}{% if category_id %}&category={{ category_id }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}{% for dust_id in dust_ids %}&dust={{ dust_id }}{% endfor %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if min_particle_size %}&min_particle_size={{ min_particle_size }}{% endif %}{% if max_particle_size %}&max_particle_size={{ max_particle_size }}{% endif %}{% if cleaning_efficiency %}&min_cleaning_efficiency={{ cleaning_efficiency }}{% endif %}{% if temperature %}&temperature={{ temperature }}{% endif %}{% if concentration %}&concentration={{ concentration }}{% endif %}">
+                                    {{ company.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+            </div>
+            
+            <div class="mt-5">
+                <p class="font-semibold">Filter Options</p>
+                <form method="get" action="{% url 'filter' %}">
+                    {% if category_id != 0 %}
+                        <input type="hidden" name="category" value="{{ category_id }}">
+                    {% endif %}
+                    {% if company_id != 0 %}
+                        <input type="hidden" name="company" value="{{ company_id }}">
+                    {% endif %}
+                    <hr class="my-3">
+                    <div>
+                        <p>Dust Types</p>
+                        <ul>
+                            {% for dust in dusts %}
+                                <li class="py-2 px-2 rounded-xl">
+                                    <label class="inline-flex items-center">
+                                        <input type="checkbox" name="dust" value="{{ dust.id }}">
+                                        <span class="ml-2">{{ dust.name }}</span>
+                                    </label>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <label for="min_particle_size">Мін розмір частки:
+                        <input type="number" name="min_particle_size" value="{{ min_particle_size }}" step="0.01" class="w-full border rounded px-1 py-2">
+                        </label>
+                    </div>
+                    <div>
+                        <label for="max_particle_size">Макс розмір частки:
+                        <input type="number" name="max_particle_size" value="{{ max_particle_size }}" step="0.01" class="w-full border rounded py-2">
+                        </label>
+                    </div>
+                    <div>
+                        <label for="cleaning_efficiency">Ефективність очищення, %:
+                        <input type="number" name="cleaning_efficiency" value="{{ cleaning_efficiency|default:"0" }}" max="100" step="1" class=" border rounded py-2" style="width: 20%;">
+                        </label>
+                    </div>
+                    <div>
+                        <label for="temperature">Температура, C:
+                        <input type="number" name="temperature" value="{{ temperature|default:"0" }}" max="1000" step="1" class="border rounded py-2">
+                        </label>
+                    </div>
+                    <div>
+                        <label for="concentration">Концентрація пилу, г/м3:
+                        <input type="number" name="concentration" value="{{ concentration|default:"0" }}" max="100" step="1" class="border rounded py-2" style="width: 25%;" >
+                        </label>
+                    </div>
+                    <div class="range_container">
+                        <div class="sliders_control mt-4 py-2">
+                            <input id="min_price" name="min_price" type="range" value="{{ min_price|default:"0" }}" min="0" max="999" step="1"/>
+                            <input id="max_price" name="max_price" type="range" value="{{ max_price|default:"999" }}" min="0" max="999" step="1"/>
+                        </div>
+                        <div class="form_control">
+                            <div class="form_control_container">
+                                <div class="form_control_container__time">Мінімальна ціна:</div>
+                                <input class="form_control_container__time__input" type="number" id="min_price-value" name="min_price_value" value="{{ min_price|default:"0" }}" min="0" max="999"/>
+                            </div>
+                            <div class="form_control_container">
+                                <div class="form_control_container__time">Максимальна ціна:</div>
+                                <input class="form_control_container__time__input" type="number" id="max_price-value" name="max_price_value" value="{{ max_price|default:"999" }}" min="0" max="999"/>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="mt-2 py-2 px-6 text-lg bg-gray-400 text-white rounded-xl hover:bg-blue-500">Filter</button>
+                </form>
+                
+                <p class="font-semibold">Clear filters</p>
+                <ul>
+                    <li><a href="{% url 'filter' %}" class="mt-2 py-2 px-6 inline-block bg-yellow-500 text-lg rounded-xl text-white">Clear</a></li>
+                </ul>
+            </div>
+            <script>
+                const minPriceInput = document.getElementById('min_price');
+                const maxPriceInput = document.getElementById('max_price');
+                const minPriceValue = document.getElementById('min_price-value');
+                const maxPriceValue = document.getElementById('max_price-value');
+            
+                minPriceInput.addEventListener('input', function () {
+                    minPriceValue.value = minPriceInput.value;
+                });
+            
+                maxPriceInput.addEventListener('input', function () {
+                    maxPriceValue.value = maxPriceInput.value;
+                });
+            
+                minPriceValue.addEventListener('input', function () {
+                    minPriceInput.value = minPriceValue.value;
+                });
+            
+                maxPriceValue.addEventListener('input', function () {
+                    maxPriceInput.value = maxPriceValue.value;
+                });
+            </script>
+        
+            <style>
+                .price-slider {
+                display: flex;
+                flex-direction: column;
+                width: 80%;
+                margin: 35% auto;
+            }
+            
+            .sliders_control {
+                position: relative;
+                min-height: 50px;
+            }
+            
+            .form_control {
+                position: relative;
+                display: flex;
+                justify-content: space-between;
+                font-size: 18px;
+                color: black;
+                width: 100%;  
+            }
+            
+            input[type=range]::-webkit-slider-thumb,
+            input[type=number]::-webkit-inner-spin-button,
+            input[type=number]::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                pointer-events: all;
+                width: 24px;
+                height: 24px;
+                background-color: #fff;
+                border-radius: 50%;
+                box-shadow: 0 0 0 1px #C6C6C6;
+                cursor: none;
+            }
+            
+            input[type=range]::-moz-range-thumb {
+                -webkit-appearance: none;
+                pointer-events: all;
+                width: 24px;
+                height: 24px;
+                background-color: #fff;
+                border-radius: 50%;
+                box-shadow: 0 0 0 1px #C6C6C6;
+                cursor: pointer;
+            }
+            
+            input[type=range]::-webkit-slider-thumb:hover {
+                background: lightblue;
+            }
+            
+            input[type=range]::-webkit-slider-thumb:active {
+                box-shadow: inset 0 0 3px lightgreen, 0 0 9px lightgreen;
+                -webkit-box-shadow: inset 0 0 3px lightgreen, 0 0 9px lightgreen;
+            }
+            
+            input[type="number"] {
+                color: #8a8383;
+                width: 40%;
+                height: 30px;
+                font-size: 16px;
+                border: none;
+            }
+            
+            input[type="range"] {
+                -webkit-appearance: none;
+                appearance: none;
+                height: 2px;
+                width: 90%;
+                position: absolute;
+                background-color: #C6C6C6;
+                pointer-events: none;
+            }
+            
+            #min_price {
+                height: 0;
+                z-index: 1;
+            }
+
+            </style>
+
+        </div>
+
+        <div class="col-span-6 bg-white rounded-xl shadow-md p-6">
+        <form method="get" action="{% url 'filter' %}" class="flex items-center justify-center">
+            {% if category_id != 0 %}
+                <input type="hidden" name="category" value="{{ category_id }}">
+            {% endif %}
+            {% if company_id != 0 %}
+                <input type="hidden" name="company" value="{{ company_id }}">
+            {% endif %}
+            {% for dust in dusts %}
+                <input type="hidden" name="dust" value="{{ dust.id }}">
+            {% endfor %}
+            <input type="hidden" name="min_particle_size" value="{{ min_particle_size }}">
+            <input type="hidden" name="max_particle_size" value="{{ max_particle_size }}">
+            <input type="hidden" name="cleaning_efficiency" value="{{ cleaning_efficiency }}">
+            <input type="hidden" name="temperature" value="{{ temperature }}">
+            <input type="hidden" name="concentration" value="{{ concentration }}">
+            <input type="hidden" name="min_price" value="{{ min_price }}">
+            <input type="hidden" name="max_price" value="{{ max_price }}">
+            
+            <input name="query" class="w-full py-2 px-6 text-lg border rounded-xl" type="text" value="{{ query }}"  placeholder="Enter your prompt">
+            <select name="sort_by" class="ml-2 py-2 px-4 text-lg border rounded-xl" >
+                <option value="" {% if not sort_by %}selected{% endif %}>Сортувати за</option>
+                <option value="name_asc" {% if sort_by == 'name_asc' %}selected{% endif %}>Назвою (за алфавітом)</option>
+                <option value="name_desc" {% if sort_by == 'name_desc' %}selected{% endif %}>Назвою (зворотній порядок)</option>
+                <option value="price_asc" {% if sort_by == 'price_asc' %}selected{% endif %}>Ціною (за зростанням)</option>
+                <option value="price_desc" {% if sort_by == 'price_desc' %}selected{% endif %}>Ціною (за спаданням)</option>
+                <option value="rating" {% if sort_by == 'rating' %}selected{% endif %}>Рейтинг</option>
+            </select>
+            <button class=" ml-2 py-2 px-6 text-lg bg-gray-400 text-white rounded-xl hover:bg-blue-500">Search</button>
+        </form>
+
+            <div class="mt-5 grid grid-cols-4 gap-3 justify-center">
+                {% for item in page_obj %}
+                    <div class=" bg-gray-50 rounded-xl shadow-md flex flex-col transform hover:scale-105 mx-2">
+                        <a href="{% url 'detail' item.id %}">
+                        <div>
+                            <img src="{{ item.image.url }}" class="rounded-t-xl w-60 h-40 object-scale-down">
+                        </div>
+        
+                            <div class="p-6 bg-white rounded-b-xl">
+                                <h2 class="text-2xl">{{ item.name }}</h2>
+                                     <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="text-gray-500">Price: {{ item.price }}</p>
+                                            <p class="text-gray-500">Rating: {{ item.average_rating|floatformat:2 }}</p>
+                                            <span class="comment_rating">
+                                                {% for i in "x"|ljust:5 %}
+                                                    {% if forloop.counter <= item.average_rating %}
+                                                        <span class="star checked">&#9733;</span>
+                                                    {% else %}
+                                                        <span class="star">&#9733;</span>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </span>
+                                        </div>
+                                        <form action="{% url 'add_to_cart' item.id %}" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="bg-blue-700 hover:bg-green-700 text-white font-bold py-7 px-7 rounded-full"><i class="fas fa-cart-plus fa-2xl"></i></button>
+                                        </form>
+                                     </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="my-6 flex justify-between">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1{% if query %}&query={{ query }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}{% if category_id %}&category={{ category_id }}{% endif %}{% if company_id %}&company={{ company_id }}{% endif %}{% for dust_id in dust_ids %}&dust={{ dust_id }}{% endfor %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if min_particle_size %}&min_particle_size={{ min_particle_size }}{% endif %}{% if max_particle_size %}&max_particle_size={{ max_particle_size }}{% endif %}{% if cleaning_efficiency %}&cleaning_efficiency={{ cleaning_efficiency }}{% endif %}{% if temperature %}&temperature={{ temperature }}{% endif %}{% if concentration %}&concentration={{ concentration }}{% endif %}{% if sort_by %}&sort_by ={{ sort_by }}{% endif %}">
+                        « Перша
+                    </a>
+                    <a href="?page={{ page_obj.previous_page_number }}{% if query %}&query={{ query }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}{% if category_id %}&category={{ category_id }}{% endif %}{% if company_id %}&company={{ company_id }}{% endif %}{% for dust_id in dust_ids %}&dust={{ dust_id }}{% endfor %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if min_particle_size %}&min_particle_size={{ min_particle_size }}{% endif %}{% if max_particle_size %}&max_particle_size={{ max_particle_size }}{% endif %}{% if min_cleaning_efficiency %}&min_cleaning_efficiency={{ min_cleaning_efficiency }}{% endif %}{% if temperature %}&temperature={{ temperature }}{% endif %}{% if concentration %}&concentration={{ concentration }}{% endif %}{% if sort_by  %}&sort_by ={{ sort_by }}{% endif %}">
+                        ‹ Попередня
+                    </a>
+                {% endif %}
+            
+                <span class="font-bold">Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}</span>
+            
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if query %}&query={{ query }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}{% if category_id %}&category={{ category_id }}{% endif %}{% if company_id %}&company={{ company_id }}{% endif %}{% for dust_id in dust_ids %}&dust={{ dust_id }}{% endfor %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if min_particle_size %}&min_particle_size={{ min_particle_size }}{% endif %}{% if max_particle_size %}&max_particle_size={{ max_particle_size }}{% endif %}{% if cleaning_efficiency %}&cleaning_efficiency={{ cleaning_efficiency }}{% endif %}{% if temperature %}&temperature={{ temperature }}{% endif %}{% if concentration %}&concentration={{ concentration }}{% endif %}">
+                        Наступна ›
+                    </a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}{% if query %}&query={{ query }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}{% if category_id %}&category={{ category_id }}{% endif %}{% if company_id %}&company={{ company_id }}{% endif %}{% for dust_id in dust_ids %}&dust={{ dust_id }}{% endfor %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if min_particle_size %}&min_particle_size={{ min_particle_size }}{% endif %}{% if max_particle_size %}&max_particle_size={{ max_particle_size }}{% endif %}{% if cleaning_efficiency %}&cleaning_efficiency={{ cleaning_efficiency }}{% endif %}{% if temperature %}&temperature={{ temperature }}{% endif %}{% if concentration %}&concentration={{ concentration }}{% endif %}">
+                        Остання »
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

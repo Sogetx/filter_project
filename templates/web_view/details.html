@@ -1,0 +1,381 @@
+{% extends 'base.html' %}
+
+{% block title %} { item.name } {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-/tbHFU4BmSC17QvYls3T61CxJLjbyUxMVyTsnKowjQD6Hxt+re/E0zxc4Utd4F/SjG3Zvyy37Bu7XIGLsZZ9Jg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+
+.tab-button {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    margin-right: 10px;
+    background-color: #fff;
+    color: black;
+    border: 2px solid #70F6F3;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab-button:hover {
+    background-color: #4299e1;
+    color: white;
+    border-color: lightblue;
+}
+
+.tab-button.active {
+    background-color: #3B82F6;
+    color: white;
+    border-color: #3B82F6;
+}
+
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.rating {
+    width: auto;
+    height: auto;
+    margin-left: 0;
+}
+
+.rating label {
+    float: right;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    margin-bottom: 10px; /* Додано відступ між рейтингом і полем тексту */
+}
+
+.rating label:not(:first-of-type) {
+    padding-right: 2px;
+}
+
+.rating label:before {
+    content: "\2605";
+    font-size: 42px;
+    color: #ccc;
+    line-height: 1;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating input:checked ~ label:before,
+.rating:not(:checked) > label:hover:before,
+.rating:not(:checked) > label:hover ~ label:before {
+    color: #f9df4a;
+}
+
+/* Поле тексту */
+.comment-form .mt-4 {
+    margin-top: 10px; /* Зменшено відстань від рейтингу до поля тексту */
+}
+
+.comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 3px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px; /* Додано відстань від рейтингу до поля тексту */
+}
+
+.comment_rating {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.comment_rating label {
+    float: right;
+    cursor: default;
+    font-size: 24px;
+    color: #ccc;
+    margin-right: 5px;
+}
+
+
+
+.comment_rating {
+    font-size: 24px; /* Розмір зірок */
+    color: #ccc; /* Колір за замовчуванням */
+}
+
+.comment_rating .checked {
+    color: #f9df4a; /* Колір для вибраних зірок */
+}
+
+
+ </style>
+
+<div class="grid grid-cols-5 gap-3 bg-gray-100 p-6 rounded-xl">
+    <div class="col-span-3 bg-white rounded-xl shadow-md p-6 flex ">
+        <div>
+            <img src="{{ item.image.url }}" class="rounded-xl mb-6 flex" style="max-height: 800px; max-width: 600px; object-fit: contain;" alt="{{ item.name }}">
+            <div class="flex mb-6">
+                <button id="tab-description" class="tab-button active px-4 py-2 mr-2 text-lg font-semibold bg-gray-200 rounded-md flex">Description</button>
+                <button id="tab-characteristics" class="tab-button px-4 py-2 mr-2 text-lg font-semibold bg-gray-200 rounded-md flex">Characteristics</button>
+                <button id="tab-comments" class="tab-button px-4 py-2 mr-2 text-lg font-semibold bg-gray-200 rounded-md flex">Comments</button>
+                <button id="tab-media" class="tab-button px-4 py-2 text-lg font-semibold bg-gray-200 rounded-md flex">Media</button>
+            </div>
+        </div>
+    
+        <div class="ml-5">
+            <h1 class="mb-4 text-3xl font-bold">{{ item.name }}</h1>
+            <p class="text-gray-700 mb-2"><strong>Price: </strong>{{ item.price }}</p>
+            <p class="text-gray-700 mb-4"><strong>Average Rating: </strong>{{ item.average_rating|floatformat:2 }}</p>
+            <span class="comment_rating flex mb-4">
+                {% for i in "x"|ljust:5 %}
+                    {% if forloop.counter <= item.average_rating %}
+                        <span class="star checked text-yellow-500">&#9733;</span>
+                    {% else %}
+                        <span class="star text-gray-300">&#9733;</span>
+                    {% endif %}
+                {% endfor %}
+            </span>
+            {% if request.user == item.created_by %}
+                <div class="mt-4 p-4 bg-gray-100 rounded-xl text-center">
+                    <p class="mb-4">This is your item!</p>
+                    <a href="#" class="inline-block px-4 py-2 text-lg font-semibold bg-teal-500 text-white rounded-xl">Edit(Don`t work)</a>
+                    <a href="#" class="inline-block px-4 py-2 text-lg font-semibold bg-red-500 text-white rounded-xl ml-2">Delete(Don`t work)</a>
+                </div>
+            {% elif request.user.is_authenticated %}
+                <div class="flex space-x-4 mt-4 w-full">
+                    <a href="#" class="inline-block px-6 py-3 text-lg font-semibold border-2 border-red-300 bg-gray-400 text-white rounded-xl hover:bg-red-500 ">Купити</a>
+                    {% if item in request.user.cart.items.all %}
+                        {% for cart_item in item.cartitem_set.all %}
+                            {% if cart_item.cart.user == request.user %}
+                                <form id="removeFromCartForm" action="{% url 'remove_from_cart' cart_item.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button id="removeFromCartButton" type="submit" class="inline-block px-6 py-3 text-lg font-semibold border-2 border-blue-300 bg-blue-300 text-white rounded-xl hover:bg-blue-500 ">Вилучити з кошику</button>
+                                </form>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <form action="{% url 'add_to_cart' item.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="inline-block px-6 py-3 text-lg font-semibold border-2 border-gray-300 bg-green-400 text-white rounded-xl hover:bg-green-600">Додати до кошику</button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-span-2 bg-white rounded-xl shadow-md p-6 flex ">
+        <div id="description" class="tab-content active">
+            {% if item.description %}
+                <p class="text-gray-700">
+                    <strong class="text-gray-500">Description:</strong><br>
+                    {{ item.description }}
+                </p>
+            {% endif %}
+        </div>
+
+        <div id="characteristics" class="tab-content hidden">
+            <p class="text-gray-700"><strong>Розмір часток, мкм:  </strong>{{ item.min_particle_size }} <strong>- </strong>{{ item.max_particle_size }}</p>
+            <p class="text-gray-700"><strong>Ефективність очищення, %:  </strong>{{ item.cleaning_efficiency }}%</p>
+            <p class="text-gray-700"><strong>Температура, С:  </strong>{{ item.temperature }}</p>
+            <p class="text-gray-700"><strong>допустима концентрація пилу на вході, г/м3:  </strong>{{ item.concentration }}</p>
+            <p class="text-gray-700"><strong>Типи пилу:</strong></p>
+            <ul class="list-disc pl-5">
+                {% for dust in item.dust.all %}
+                    <li>{{ dust.name }}</li>
+                {% endfor %}
+            </ul>
+            <p class="text-gray-700"><strong>Компанія:  </strong>{{ item.company.name }}</p>
+        </div>
+        <div id="comments" class="tab-content hidden">
+            {% if request.user.is_authenticated %}
+                <h2 class="text-lg font-semibold mb-4">Add Comment</h2>
+                <form method="post" action="" class="comment-form">
+                    {% csrf_token %}
+                    <div class="flex items-left">
+                        <div class="rating">
+                            <input type="radio" id="star5" name="rating" value="5" /><label for="star5"></label>
+                            <input type="radio" id="star4" name="rating" value="4" /><label for="star4"></label>
+                            <input type="radio" id="star3" name="rating" value="3" /><label for="star3"></label>
+                            <input type="radio" id="star2" name="rating" value="2" /><label for="star2"></label>
+                            <input type="radio" id="star1" name="rating" value="1" /><label for="star1"></label>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        {{ comment_form.text }}
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Додати коментар</button>
+                    </div>
+                </form>
+            {% endif %}
+
+            {% if item.comments.all %}
+                <h2 class="text-lg font-semibold mt-8 mb-4">Comments</h2>
+                <ul class="space-y-4">
+                    {% for comment in item.comments.all %}
+                        <li>
+                            <div class="flex items-center justify-between">
+                                <div class="font-bold">{{ comment.user.username }}
+                                    <span class="comment_rating">
+                                    {% for i in "x"|ljust:5 %}
+                                        {% if forloop.counter <= comment.rating %}
+                                            <span class="star checked text-yellow-500">&#9733;</span>
+                                        {% else %}
+                                            <span class="star text-gray-300">&#9733;</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                    </span>
+                                </div>
+                                <div class="text-gray-500">{{ comment.created_at }}</div>
+                            </div>
+                            <p class="text-gray-800">{{ comment.text }}</p>
+                            {% if request.user.is_staff %}
+                                <form method="post" action="{% url 'delete_comment' comment.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="text-red-500 font-bold py-1 px-2">Видалити</button>
+                                </form>
+                            {% endif %}
+                            <div class="replies ml-4">
+                                {% for reply in comment.replies.all %}
+                                    <div class="flex items-center ml-4">
+                                        <div class="font-bold">{{ reply.user.username }}</div>
+                                        <div class="text-gray-500 ml-2">{{ reply.created_at }}</div>
+                                    </div>
+                                    <p class="text-gray-800 ml-4">{{ reply.text }}</p>
+                                {% endfor %}
+                            </div>
+                            {% if request.user.is_authenticated %}
+                                <button class="reply-btn text-blue-500 font-bold py-1 px-2" data-comment-id="{{ comment.id }}">Reply</button>
+                                <form class="reply-form" id="reply-form-{{ comment.id }}" method="post" action="{% url 'reply_to_comment' comment.id %}" style="display: none;">
+                                    {% csrf_token %}
+                                    {{ reply_form.as_p }}
+                                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Відповісти</button>
+                                </form>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+                        {% else %}
+                            <p>No comments yet.</p>
+                        {% endif %}
+                    </div>
+                    <!-- Фото/Відео -->
+                    <div id="media" class="tab-pane">
+                        <!-- Ваш код для виведення фото/відео тут -->
+                    </div>
+    </div>
+
+
+    <!-- Блок з вкладками -->
+    <!--<div class="col-span-3 bg-white rounded-xl shadow-md p-6 ">
+        <div class="flex mb-6 ">
+            <button id="tab-description" class="tab-button active px-4 py-2 mr-2 text-lg font-semibold bg-gray-200 rounded-md">Description</button>
+            <button id="tab-characteristics" class="tab-button px-4 py-2 mr-2 text-lg font-semibold bg-gray-200 rounded-md">Characteristics</button>
+            <button id="tab-comments" class="tab-button px-4 py-2 mr-2 text-lg font-semibold bg-gray-200 rounded-md">Comments</button>
+            <button id="tab-media" class="tab-button px-4 py-2 text-lg font-semibold bg-gray-200 rounded-md">Media</button>
+        </div>
+    </div> -->
+</div>
+<div class="mt-6 px-6 py-12 bg-white rounded-xl shadow-md p-6">
+    <h2 class="mb-12 text-2xl text-center">Related items</h2>
+    
+    <div class="grid grid-cols-4 gap-3 ">
+        {% for item in related_items %}
+              <div class=" p-6 bg-gray-50 rounded-xl shadow-lg">
+                  <a href="{% url 'detail' item.id %}">
+                            <img src="{{ item.image.url }}" class="rounded-t-xl" alt="{{ item.name }}">
+                            <h2 class="text-2xl">{{ item.name }}</h2>
+                            <p class="text-gray-500">Price: {{ item.price }}</p>
+                      <div class="flex items-center justify-between"> 
+                          <div>
+                              <p class="text-gray-500">Rating: {{ item.average_rating|floatformat:2 }}</p>
+                              <span class="comment_rating">
+                                  {% for i in "x"|ljust:5 %}
+                                      {% if forloop.counter <= item.average_rating %}
+                                          <span class="star checked">&#9733;</span>
+                                      {% else %}
+                                          <span class="star">&#9733;</span>
+                                      {% endif %}
+                                  {% endfor %}
+                              </span>
+                          </div>
+                      </div>
+                  </a>
+                  <form action="{% url 'add_to_cart' item.id %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit" class="bg-blue-700 hover:bg-green-700 text-white font-bold py-7 px-7 rounded-full"><i class="fas fa-cart-plus fa-2xl"></i></button>
+                  </form>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+    
+<style>
+    .comment-form input[type=text],
+    .comment-form textarea {
+        width: 300px; /* Розмір поля вводу для тексту коментаря */
+        height: 50px; /* Розмір поля вводу для коментаря */
+    }
+</style>
+    <script>
+        document.getElementById("removeFromCartButton").addEventListener("click", function(event) {
+            event.preventDefault(); // Зупиняємо перехід за посиланням
+            document.getElementById("removeFromCartForm").submit(); // Відправляємо форму вручну
+        });
+    </script>
+    
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const buttons = document.querySelectorAll('.tab-button');
+    const tabs = document.querySelectorAll('.tab-content');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const tabId = button.id.replace('tab-', '');
+            const tab = document.getElementById(tabId);
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            button.classList.add('active');
+            tab.classList.add('active');
+        });
+    });
+});
+    document.addEventListener('DOMContentLoaded', function () {
+        const replyButtons = document.querySelectorAll('.reply-btn');
+        replyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const commentId = button.dataset.commentId;
+                const replyForm = document.getElementById(`reply-form-${commentId}`);
+                if (replyForm.style.display === 'none') {
+                    replyForm.style.display = 'block';
+                } else {
+                    replyForm.style.display = 'none';
+                }
+            });
+        });
+
+        const addCommentButton = document.querySelector('.add-comment-btn');
+        const commentForm = document.querySelector('.comment-form');
+
+        addCommentButton.addEventListener('click', () => {
+            if (commentForm.style.display === 'none') {
+                commentForm.style.display = 'block';
+            } else {
+                commentForm.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+    
+{% endblock %}
+

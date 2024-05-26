@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Configurator Results{% endblock %}
+
+{% block content %}
+
+    <h1 class="text-3xl font-semibold mb-4">Configurator Result</h1>
+    <div class="space-x-3">
+    <button type="button" onclick="history.back();" class="px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:border-blue-500">
+        Повернутися
+    </button>
+</div>
+    
+    <div class="grid grid-cols-3 gap-3 justify-center">
+        {% for item in items %}
+            <div>
+                <a href="{% url 'detail' item.id %}">
+                    <div>
+                        <img src="{{ item.image.url }}" class="rounded-t-xl">
+                    </div>
+
+                    <div class="p-6 bg-white rounded-b-xl">
+                        <h2 class="text-2xl">{{ item.name }}</h2>
+                        {% if item.heatattention %}
+                                <span class="text-red-500">Потрібно встановити охолоджувальну камеру.</span>
+                        {% endif %}
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500">Price: {{ item.price }}</p>
+                                <p class="text-gray-500">Rating: {{ item.average_rating|floatformat:2 }}</p>
+                                <span class="comment_rating">
+                                    {% for i in "x"|ljust:5 %}
+                                        {% if forloop.counter <= item.average_rating %}
+                                            <span class="star checked">&#9733;</span>
+                                        {% else %}
+                                            <span class="star">&#9733;</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </span>
+                            </div>
+                            <form action="{% url 'add_to_cart' item.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="bg-blue-700 hover:bg-green-700 text-white font-bold py-7 px-7 rounded-full"><i class="fas fa-cart-plus fa-2xl"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

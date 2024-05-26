@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %} Cart {% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-5">
+    <div class="bg-white shadow-md rounded-md">
+        <div class="p-4 border-b">
+            <h2 class="text-xl font-semibold">Shopping Cart</h2>
+        </div>
+        <div class="p-4">
+            <div class="overflow-x-auto">
+                <table class="w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product Name & Details</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Characteristic</th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        {% for item in cart_items %}
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <img src="{{ item.item.image.url }}" alt="{{ item.item.name }}" class="w-36 h-36 rounded-lg mr-4">
+                                    <div>
+                                        <div class="text-md font-medium text-gray-900"><a href="{% url 'detail' item.item.id %}">{{ item.item.name }}</a></div>
+                                        <div class="text-sm text-gray-500">Категорія: {{ item.item.category.name }}</div>
+                                        <div class="text-sm text-gray-500">Компанія: {{ item.item.company.name }}</div>
+                                        <div class="text-sm text-gray-500">
+                                            Тип пилу: {% for dust in item.item.dust.all %}
+                                            <li>{{ dust.name }}</li>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-500">Розмір часток, мкм: {{ item.item.min_particle_size }} - {{ item.item.max_particle_size }}</div>
+                                        <div class="text-sm text-gray-500">Ефективність очищення, %: {{ item.item.min_cleaning_efficiency }} - {{ item.item.max_cleaning_efficiency }}</div>
+                                        <div class="text-sm text-gray-500">Продуктивність, м3: {{ item.item.min_productivity }} - {{ item.item.max_productivity }}</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right">
+                                <span class="text-sm font-semibold">${{ item.item.price }}</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center">
+                                <span class="text-sm font-semibold">
+                                    <form method="post" action="{% url 'update_cart_item_quantity' %}" class="ml-2">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="cart_item_id" value="{{ item.id }}"> 
+                                                <input id="quantityInput" type="number" name="new_quantity" value="{{ item.quantity }}" min="1" onchange="this.form.submit()" class="w-16 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                                            </form>
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right">
+                                <span class="text-sm font-semibold">${{ item.total_price }}</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center">
+                                <a href="{% url 'remove_from_cart' item.id %}" class="text-red-500 hover:text-red-700">Remove</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-4">Your cart is empty</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="flex justify-between items-center pt-4">
+                <div>
+                    <label class="text-gray-600">Total price</label>
+                    <div class="text-xl font-semibold">${{ total_price }}</div>
+                </div>
+                <div class="space-x-3">
+                    <button type="button" onclick="history.back()" class="px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:border-blue-500">Повернутися</button>
+                    <a href="{% url 'order_pdf' %}" class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none ">Замовити</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
