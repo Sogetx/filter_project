@@ -48,7 +48,6 @@ class MainItem(models.Model):
     description = models.TextField(default="Hello World!")
     creat_by = models.ForeignKey(User, related_name='item', on_delete=models.CASCADE)
     creat_at = models.DateTimeField(auto_now_add=True)
-    # image = models.CharField(max_length=5000, default="./images/1.png", blank=True)
     image = models.ImageField(upload_to='templates/web_view/images/', null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
@@ -88,8 +87,6 @@ class Comment(models.Model):
     text = models.TextField()
     rating = models.IntegerField(choices=[(i, i) for i in range(6)])
     created_at = models.DateTimeField(auto_now_add=True)
-
-    #rating = models.IntegerField(default=0)
 
     class Meta:
         ordering = ['-created_at']

@@ -9,7 +9,7 @@ from .models import MainItem, Category, Company, Cart, CartItem, Comment, Reply,
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q, Count
 from django.db.models import Avg
-from .forms import SignUpForm, CommentForm, ReplyForm
+from .forms import CommentForm, ReplyForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .conf_forms import ConfForm
 from django.contrib.auth import logout
@@ -27,8 +27,7 @@ from reportlab.pdfbase import pdfmetrics
 from django.http import HttpResponse
 
 
-
-def index(request):
+def index(request): # Головна сторінка веб-сайту
     categories = Category.objects.all()
     dusts = Dust.objects.all()
     companies = Company.objects.all()
@@ -43,7 +42,7 @@ def signout(request):
 
 
 @login_required
-def account_view(request):
+def account_view(request): # Сторінка користувача
     return render(request, 'web_view/account_info.html')
 
 
@@ -62,7 +61,7 @@ def account_change_name(request):
 
 
 # Product View
-def show_details(request, pk):
+def show_details(request, pk):  # Опис товарів
     item = get_object_or_404(MainItem, pk=pk)
     related_items = MainItem.objects.filter(category=item.category).exclude(pk=pk)[0:3]
     if request.method == 'POST':
@@ -89,7 +88,7 @@ def show_details(request, pk):
 
 
 # Filter View
-def items_filter(request):
+def items_filter(request):  # пошук товарів
     query = request.GET.get('query', '')
     sort_by = request.GET.get('sort_by', '')
     category_id = request.GET.get('category', 0)
@@ -195,12 +194,12 @@ def items_filter(request):
 
 # Configurator View
 def configurator(request):
-
     if request.method == 'POST':
         form = ConfForm(request.POST)
         if form.is_valid():
             particle_size_range, cleaning_efficiency, temperature, concentration, dust_ids = form.cleaned_data[
-                'particle_size'], form.cleaned_data['cleaning_efficiency'], form.cleaned_data['temperature'], form.cleaned_data['concentration'], form.cleaned_data.get('dusts', [])
+                'particle_size'], form.cleaned_data['cleaning_efficiency'], form.cleaned_data['temperature'], \
+            form.cleaned_data['concentration'], form.cleaned_data.get('dusts', [])
 
             min_particle_size, max_particle_size = map(float, particle_size_range.split('-'))
             request.session['min_particle_size'] = min_particle_size
@@ -313,7 +312,7 @@ def view_cart(request):
 
 
 @require_POST
-def update_cart_item_quantity(request):
+def update_cart_item_quantity(request):  # оновлюємо кількість товару в кошику
     if request.method == 'POST':
         cart_item_id = request.POST.get('cart_item_id')
         new_quantity = request.POST.get('new_quantity')
@@ -360,7 +359,7 @@ def delete_reply(request, reply_id):
     return redirect('detail', pk=reply.comment.item.id)
 
 
-def order_pdf(request):
+def order_pdf(request):  # функція формування пдф листу замовлення
     user = request.user
     cart = Cart.objects.get(user=request.user)
     cart_items = cart.cartitem_set.all()
