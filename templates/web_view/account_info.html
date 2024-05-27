@@ -2,19 +2,51 @@
 {% block title %}My Account{% endblock %}
 
 {% block content %}
-<h1>My Account</h1>
-<p>Email: {{ user.email }}</p>
-<a href="{% url 'account_email' %}" class="text-blue-500 hover:underline">Change Email</a>
+<div class="container mx-auto py-8 mt-4 bg-gray-50 p-6 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold mb-4">My Account</h1>
+    <form method="post" action="{% url 'account_change_email' %}" class="mb-4">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
+            <input type="email" id="email" name="email" value="{{ user.email }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" onchange="this.form.submit()">
+        </div>
+    </form>
 
-<form method="post" action="{% url 'account_change_name' %}">
-  {% csrf_token %}
-  <label for="first_name">First Name:</label>
-  <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" onchange="this.form.submit()"><br>
+    <form method="post" action="{% url 'account_change_name' %}" class="mt-4">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="first_name" class="block text-sm font-medium text-gray-700">First Name:</label>
+            <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" onchange="this.form.submit()">
+        </div>
 
-  <label for="last_name">Last Name:</label>
-  <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" onchange="this.form.submit()"><br>
-</form>
+        <div class="mb-4">
+            <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" onchange="this.form.submit()">
+        </div>
+    </form>
 
-<h2>Change Password</h2>
-<a href="{% url 'account_change_password' %}" class="text-blue-500 hover:underline">Change Password</a>
+    
+    <h2 class="text-xl font-semibold mt-6 mb-4">Change Password</h2>
+    <form method="post" action="{% url 'account_change_password' %}" class="mt-4 bg-white p-6 rounded-lg shadow-md">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="oldpassword" class="block text-sm font-medium text-gray-700">Old Password:</label>
+            <input type="password" id="oldpassword" name="oldpassword" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+    
+        <div class="mb-4">
+            <label for="password1" class="block text-sm font-medium text-gray-700">New Password:</label>
+            <input type="password" id="password1" name="password1" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+    
+        <div class="mb-4">
+            <label for="password2" class="block text-sm font-medium text-gray-700">Confirm New Password:</label>
+            <input type="password" id="password2" name="password2" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+    
+        <button type="submit" formaction="{% url 'account_change_password' %}" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">Change Password</button>
+        <a href="{% url 'account_reset_password' %}" class="ml-4 text-blue-500 hover:underline">Forgot Password?</a>
+    </form>
+
+</div>
 {% endblock %}

@@ -25,9 +25,9 @@ from reportlab.lib import colors
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
 from django.http import HttpResponse
+from allauth.account.forms import ChangePasswordForm
 
-
-def index(request): # Головна сторінка веб-сайту
+def index(request):  # Головна сторінка веб-сайту
     categories = Category.objects.all()
     dusts = Dust.objects.all()
     companies = Company.objects.all()
@@ -42,8 +42,13 @@ def signout(request):
 
 
 @login_required
-def account_view(request): # Сторінка користувача
-    return render(request, 'web_view/account_info.html')
+def account_view(request):  # Сторінка користувача
+    password_form = ChangePasswordForm() #Отримуємо форму з бібліотеки allauth
+    context = {
+        'user': request.user,
+        'form': password_form,
+    }
+    return render(request, 'web_view/account_info.html', context)
 
 
 @login_required
@@ -56,9 +61,17 @@ def account_change_name(request):
         request.user.last_name = last_name
         request.user.save()
         return redirect('account_info')
-
     return render(request, 'web_view/account_info.html')
 
+
+@login_required
+def account_change_email(request):
+    if request.method == 'POST':
+        new_email = request.POST.get('email')
+        if new_email:
+            request.user.email = new_email
+            request.user.save()
+    return redirect('account_info')
 
 # Product View
 def show_details(request, pk):  # Опис товарів
@@ -199,7 +212,7 @@ def configurator(request):
         if form.is_valid():
             particle_size_range, cleaning_efficiency, temperature, concentration, dust_ids = form.cleaned_data[
                 'particle_size'], form.cleaned_data['cleaning_efficiency'], form.cleaned_data['temperature'], \
-            form.cleaned_data['concentration'], form.cleaned_data.get('dusts', [])
+                form.cleaned_data['concentration'], form.cleaned_data.get('dusts', [])
 
             min_particle_size, max_particle_size = map(float, particle_size_range.split('-'))
             request.session['min_particle_size'] = min_particle_size
