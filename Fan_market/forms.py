@@ -13,4 +13,4 @@ class CommentForm(forms.ModelForm):
 
 
 class ReplyForm(forms.Form):
-    text = forms.CharField(label='Ваша відповідь', widget=forms.Textarea(attrs={'rows': 1, 'style': 'display:block;'}))
+    text = forms.CharField(label='Ваша відповідь', widget=forms.Textarea(attrs={'rows': 1, 'style': 'display:block;', 'placeholder': 'Введіть свою відповідь'}))

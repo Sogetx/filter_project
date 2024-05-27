@@ -108,7 +108,11 @@
             {% else %}
                 <h1 class="m-0 text-lg">Магазин Фільтрів</h1>
             {% endif %}
-            <nav class=" ml-40 mt-2">
+            {% if request.user.is_authenticated %}
+                <nav class=" ml-40 mt-2">
+            {% else %}
+                 <nav class="mr-10 mt-2">
+            {% endif %}
                 <ul class="flex">
                     <li class="mr-6 text-lg"><a href="{% url 'index' %}" class="text-white hover:text-xl">Головна</a></li>
                     <li class="mr-6 text-lg"><a href="{% url 'configurator' %}" class="text-white">Конфігуратор</a></li>

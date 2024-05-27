@@ -40,42 +40,6 @@
     display: block;
 }
 
-.rating {
-    width: auto;
-    height: auto;
-    margin-left: 0;
-}
-
-.rating label {
-    float: right;
-    position: relative;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    margin-bottom: 10px; /* Додано відступ між рейтингом і полем тексту */
-}
-
-.rating label:not(:first-of-type) {
-    padding-right: 2px;
-}
-
-.rating label:before {
-    content: "\2605";
-    font-size: 42px;
-    color: #ccc;
-    line-height: 1;
-}
-
-.rating input {
-    display: none;
-}
-
-.rating input:checked ~ label:before,
-.rating:not(:checked) > label:hover:before,
-.rating:not(:checked) > label:hover ~ label:before {
-    color: #f9df4a;
-}
-
 /* Поле тексту */
 .comment-form .mt-4 {
     margin-top: 10px; /* Зменшено відстань від рейтингу до поля тексту */
@@ -125,7 +89,6 @@
                 <button id="tab-description" class="tab-button active px-4 py-2 mr-2 text-lg font-semibold bg-gray-200 rounded-md flex">Description</button>
                 <button id="tab-characteristics" class="tab-button px-4 py-2 mr-2 text-lg font-semibold bg-gray-200 rounded-md flex">Characteristics</button>
                 <button id="tab-comments" class="tab-button px-4 py-2 mr-2 text-lg font-semibold bg-gray-200 rounded-md flex">Comments</button>
-                <button id="tab-media" class="tab-button px-4 py-2 text-lg font-semibold bg-gray-200 rounded-md flex">Media</button>
             </div>
         </div>
     
@@ -170,7 +133,7 @@
             {% endif %}
         </div>
     </div>
-    <div class="col-span-2 bg-white rounded-xl shadow-md p-6 flex ">
+    <div class="col-span-2 bg-gray-50 rounded-xl shadow-md p-6 flex ">
         <div id="description" class="tab-content active">
             {% if item.description %}
                 <p class="text-gray-700">
@@ -184,7 +147,7 @@
             <p class="text-gray-700"><strong>Розмір часток, мкм:  </strong>{{ item.min_particle_size }} <strong>- </strong>{{ item.max_particle_size }}</p>
             <p class="text-gray-700"><strong>Ефективність очищення, %:  </strong>{{ item.cleaning_efficiency }}%</p>
             <p class="text-gray-700"><strong>Температура, С:  </strong>{{ item.temperature }}</p>
-            <p class="text-gray-700"><strong>допустима концентрація пилу на вході, г/м3:  </strong>{{ item.concentration }}</p>
+            <p class="text-gray-700"><strong>Допустима концентрація пилу на вході, г/м3:  </strong>{{ item.concentration }}</p>
             <p class="text-gray-700"><strong>Типи пилу:</strong></p>
             <ul class="list-disc pl-5">
                 {% for dust in item.dust.all %}
@@ -220,10 +183,10 @@
                 <h2 class="text-lg font-semibold mt-8 mb-4">Comments</h2>
                 <ul class="space-y-4">
                     {% for comment in item.comments.all %}
-                        <li>
-                            <div class="flex items-center justify-between">
+                        <li class="bg-white shadow-md rounded-xl p-4">
+                            <div class="flex items-center justify-between ml-4">
                                 <div class="font-bold">{{ comment.user.username }}
-                                    <span class="comment_rating">
+                                    <span class="comment_rating flex">
                                     {% for i in "x"|ljust:5 %}
                                         {% if forloop.counter <= comment.rating %}
                                             <span class="star checked text-yellow-500">&#9733;</span>
@@ -235,30 +198,32 @@
                                 </div>
                                 <div class="text-gray-500">{{ comment.created_at }}</div>
                             </div>
-                            <p class="text-gray-800">{{ comment.text }}</p>
+                            <p class="text-gray-800 ml-4">{{ comment.text }}</p>
                             {% if request.user.is_staff %}
                                 <form method="post" action="{% url 'delete_comment' comment.id %}">
                                     {% csrf_token %}
                                     <button type="submit" class="text-red-500 font-bold py-1 px-2">Видалити</button>
                                 </form>
                             {% endif %}
-                            <div class="replies ml-4">
+                            <div class="replies ml-8 mt-2 shadow-md rounded-xl bg-gray-50">
                                 {% for reply in comment.replies.all %}
-                                    <div class="flex items-center ml-4">
+                                    <div class="flex items-center ml-4 justify-between">
                                         <div class="font-bold">{{ reply.user.username }}</div>
-                                        <div class="text-gray-500 ml-2">{{ reply.created_at }}</div>
+                                        <div class="text-gray-500">{{ reply.created_at }}</div>
                                     </div>
                                     <p class="text-gray-800 ml-4">{{ reply.text }}</p>
                                 {% endfor %}
                             </div>
                             {% if request.user.is_authenticated %}
-                                <button class="reply-btn text-blue-500 font-bold py-1 px-2" data-comment-id="{{ comment.id }}">Reply</button>
-                                <form class="reply-form" id="reply-form-{{ comment.id }}" method="post" action="{% url 'reply_to_comment' comment.id %}" style="display: none;">
+                                <button class="reply-btn text-blue-500 font-bold py-1 px-2 ml-2" data-comment-id="{{ comment.id }}">Відповісти</button>
+                                <div class="ml-4">
+                                <form class="reply-form" id="reply-form-{{ comment.id }}" method="post" action="{% url 'reply_to_comment' comment.id %}" style="display: none; ">
                                     {% csrf_token %}
                                     {{ reply_form.as_p }}
-                                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Відповісти</button>
+                                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl">Відповісти</button>
                                 </form>
                             {% endif %}
+                            </div>
                         </li>
                     {% endfor %}
                 </ul>
@@ -266,22 +231,9 @@
                             <p>No comments yet.</p>
                         {% endif %}
                     </div>
-                    <!-- Фото/Відео -->
-                    <div id="media" class="tab-pane">
-                        <!-- Ваш код для виведення фото/відео тут -->
-                    </div>
     </div>
 
 
-    <!-- Блок з вкладками -->
-    <!--<div class="col-span-3 bg-white rounded-xl shadow-md p-6 ">
-        <div class="flex mb-6 ">
-            <button id="tab-description" class="tab-button active px-4 py-2 mr-2 text-lg font-semibold bg-gray-200 rounded-md">Description</button>
-            <button id="tab-characteristics" class="tab-button px-4 py-2 mr-2 text-lg font-semibold bg-gray-200 rounded-md">Characteristics</button>
-            <button id="tab-comments" class="tab-button px-4 py-2 mr-2 text-lg font-semibold bg-gray-200 rounded-md">Comments</button>
-            <button id="tab-media" class="tab-button px-4 py-2 text-lg font-semibold bg-gray-200 rounded-md">Media</button>
-        </div>
-    </div> -->
 </div>
 <div class="mt-6 px-6 py-12 bg-white rounded-xl shadow-md p-6">
     <h2 class="mb-12 text-2xl text-center">Related items</h2>
