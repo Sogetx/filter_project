@@ -1,83 +1,6 @@
 {% extends 'base.html' %}
 
 {% block title %}Головна{% endblock %}
- <style>
-.rating {
-    width: auto;
-    height: auto;
-    margin-left: 0;
-}
-
-.rating label {
-    float: right;
-    position: relative;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    margin-bottom: 10px;
-}
-
-.rating label:not(:first-of-type) {
-    padding-right: 2px;
-}
-
-.rating label:before {
-    content: "\2605";
-    font-size: 42px;
-    color: #ccc;
-    line-height: 1;
-}
-
-.rating input {
-    display: none;
-}
-
-.rating input:checked ~ label:before,
-.rating:not(:checked) > label:hover:before,
-.rating:not(:checked) > label:hover ~ label:before {
-    color: #f9df4a;
-}
-
-/* Поле тексту */
-.comment-form .mt-4 {
-    margin-top: 10px; 
-}
-
-.comment-form textarea {
-    width: 100%;
-    padding: 10px;
-    border: 3px solid #ccc;
-    border-radius: 5px;
-    margin-top: 10px; 
-}
-
-.comment_rating {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.comment_rating label {
-    float: right;
-    cursor: default;
-    font-size: 24px;
-    color: #ccc;
-    margin-right: 5px;
-}
-
-
-
-.comment_rating {
-    font-size: 24px; 
-    color: #ccc; 
-}
-
-.comment_rating .checked {
-    color: #f9df4a; 
-}
-
-
- </style>
 
 <style>
     .tab-button {
@@ -130,7 +53,7 @@
             {% for category in categories %}
                   <div class="shadow-xl bg-white rounded-xl hover:bg-gray-100 transform hover:scale-105 mx-3">
                     <a href="{% url 'filter' %}?category={{ category.id }}" class="block p-4 rounded-xl text-center">
-                        <div class="p-6 bg-white rounded-b-xl">
+                        <div class="p-6 rounded-b-xl focus:bg-violet-600">
                             <h2 class="text-2xl">{{ category.name }}</h2>
                         </div>
                     </a>

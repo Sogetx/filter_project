@@ -4,31 +4,40 @@
 {% block content %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-/tbHFU4BmSC17QvYls3T61CxJLjbyUxMVyTsnKowjQD6Hxt+re/E0zxc4Utd4F/SjG3Zvyy37Bu7XIGLsZZ9Jg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <div class="grid grid-cols-8 gap-4 bg-gray-100 p-1 rounded-xl flex">
-         <div class="col-span-2 bg-white rounded-xl shadow-md p-6 flex flex-col">
+         <div class="col-span-2 bg-white rounded-xl shadow-md p-4 flex flex-col">
             <div>
-                <p class="font-semibold">Categories</p>
-                    <ul>
-                        {% for category in categories %}
-                            <li class="py-2 px-2 rounded-xl{% if category.id == category_id %} bg-gray-200{% endif %}">
-                                <a href="{% url 'filter' %}?query={{ query }}&category={{ category.id }}{% if company_id %}&company={{ company_id }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}{% for dust_id in dust_ids %}&dust={{ dust_id }}{% endfor %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if min_particle_size %}&min_particle_size={{ min_particle_size }}{% endif %}{% if max_particle_size %}&max_particle_size={{ max_particle_size }}{% endif %}{% if cleaning_efficiency %}&cleaning_efficiency={{ cleaning_efficiency }}{% endif %}{% if temperature %}&temperature={{ temperature }}{% endif %}{% if concentration %}&concentration={{ concentration }}{% endif %}">
-                                    {{ category.name }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                <p class="font-semibold mt-4">Companies</p>
-                    <ul>
-                        {% for company in companies %}
-                            <li class="py-2 px-2 rounded-xl{% if company.id == company_id %} bg-gray-200{% endif %}">
-                                <a href="{% url 'filter' %}?query={{ query }}&company={{ company.id }}{% if category_id %}&category={{ category_id }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}{% for dust_id in dust_ids %}&dust={{ dust_id }}{% endfor %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if min_particle_size %}&min_particle_size={{ min_particle_size }}{% endif %}{% if max_particle_size %}&max_particle_size={{ max_particle_size }}{% endif %}{% if cleaning_efficiency %}&min_cleaning_efficiency={{ cleaning_efficiency }}{% endif %}{% if temperature %}&temperature={{ temperature }}{% endif %}{% if concentration %}&concentration={{ concentration }}{% endif %}">
-                                    {{ company.name }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                <button class="text-lg font-semibold bg-transparent px-0 py-1 mr-2 focus:outline-none" onclick="toggleCollapse('category-collapse')">
+                    <p class="font-semibold">Categories </p>
+                </button>
+            <div id="category-collapse" class="collapse">
+                         <ul>
+                            {% for category in categories %}
+                                <li class="py-2 px-2 rounded-xl{% if category.id == category_id %} bg-gray-200{% endif %}">
+                                    <a href="{% url 'filter' %}?query={{ query }}&category={{ category.id }}{% if company_id %}&company={{ company_id }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}{% for dust_id in dust_ids %}&dust={{ dust_id }}{% endfor %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if min_particle_size %}&min_particle_size={{ min_particle_size }}{% endif %}{% if max_particle_size %}&max_particle_size={{ max_particle_size }}{% endif %}{% if cleaning_efficiency %}&cleaning_efficiency={{ cleaning_efficiency }}{% endif %}{% if temperature %}&temperature={{ temperature }}{% endif %}{% if concentration %}&concentration={{ concentration }}{% endif %}">
+                                        {{ category.name }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                </div>
+                <button class="text-lg font-semibold bg-transparent px-0 py-1 mr-2 focus:outline-none" onclick="toggleCollapse('company-collapse')">
+                    <p class="font-semibold"> Companies </p>
+                </button>
+                   <div id="company-collapse" class="collapse">
+                            <ul>
+                                {% for company in companies %}
+                                    <li class="py-2 px-2 rounded-xl{% if company.id == company_id %} bg-gray-200{% endif %}">
+                                        <a href="{% url 'filter' %}?query={{ query }}&company={{ company.id }}{% if category_id %}&category={{ category_id }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}{% for dust_id in dust_ids %}&dust={{ dust_id }}{% endfor %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if min_particle_size %}&min_particle_size={{ min_particle_size }}{% endif %}{% if max_particle_size %}&max_particle_size={{ max_particle_size }}{% endif %}{% if cleaning_efficiency %}&min_cleaning_efficiency={{ cleaning_efficiency }}{% endif %}{% if temperature %}&temperature={{ temperature }}{% endif %}{% if concentration %}&concentration={{ concentration }}{% endif %}">
+                                            {{ company.name }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                   
+                </div>
             </div>
-            
-            <div class="mt-5">
+            <div class="mt-5 items-center justify-between">
+                <div>
                 <p class="font-semibold">Filter Options</p>
                 <form method="get" action="{% url 'filter' %}">
                     {% if category_id != 0 %}
@@ -93,10 +102,12 @@
                     <button class="mt-2 py-2 px-6 text-lg bg-gray-400 text-white rounded-xl hover:bg-blue-500">Filter</button>
                 </form>
                 
-                <p class="font-semibold">Clear filters</p>
-                <ul>
-                    <li><a href="{% url 'filter' %}" class="mt-2 py-2 px-6 inline-block bg-yellow-500 text-lg rounded-xl text-white">Clear</a></li>
-                </ul>
+                </div>
+                       <p class="font-semibold">Clear filters</p>
+                    <ul>
+                        <li><a href="{% url 'filter' %}" class=" py-2 px-6 inline-block bg-yellow-500 text-lg rounded-xl text-white">Clear</a></li>
+                    </ul>
+                
             </div>
             <script>
                 const minPriceInput = document.getElementById('min_price');
@@ -292,4 +303,10 @@
             </div>
         </div>
     </div>
+    <script>
+  function toggleCollapse(id) {
+    const collapse = document.getElementById(id);
+    collapse.classList.toggle('hidden');
+  }
+</script>
 {% endblock %}

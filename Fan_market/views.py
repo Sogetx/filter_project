@@ -27,6 +27,7 @@ from reportlab.pdfbase import pdfmetrics
 from django.http import HttpResponse
 from allauth.account.forms import ChangePasswordForm
 
+
 def index(request):  # Головна сторінка веб-сайту
     categories = Category.objects.all()
     dusts = Dust.objects.all()
