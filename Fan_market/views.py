@@ -174,7 +174,7 @@ def items_filter(request):  # пошук товарів
     for dust_id in dust_ids:
         items = items.filter(dust__id=dust_id)
 
-    paginator = Paginator(items, 6)
+    paginator = Paginator(items, 8)
     page = request.GET.get('page', 1)
 
     try:
