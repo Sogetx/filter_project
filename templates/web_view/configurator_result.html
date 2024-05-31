@@ -2,26 +2,21 @@
 {% block title %}Configurator Results{% endblock %}
 
 {% block content %}
-
+<div class="mt-6 px-6 py-5 bg-gray-50 shadow-md p-6 rounded-xl">
     <h1 class="text-3xl font-semibold mb-4">Configurator Result</h1>
-    <div class="space-x-3">
-    <button type="button" onclick="history.back();" class="px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:border-blue-500">
-        Повернутися
-    </button>
-</div>
     
-    <div class="grid grid-cols-3 gap-3 justify-center">
+    <div class="grid grid-cols-3 gap-3 justify-center p-6">
         {% for item in items %}
-            <div>
+            <div class="bg-white shadow-md p-6 rounded-xl  transform hover:scale-105 mx-2">
                 <a href="{% url 'detail' item.id %}">
                     <div>
-                        <img src="{{ item.image.url }}" class="rounded-t-xl">
+                        <img src="{{ item.image.url }}" class="rounded-t-xl w-100 h-80 object-scale-down">
                     </div>
 
                     <div class="p-6 bg-white rounded-b-xl">
                         <h2 class="text-2xl">{{ item.name }}</h2>
                         {% if item.heatattention %}
-                                <span class="text-red-500">Потрібно встановити охолоджувальну камеру.</span>
+                                <span class="text-red-500">Потрібно встановити теплообмінник.</span>
                         {% endif %}
                         <div class="flex items-center justify-between">
                             <div>
@@ -47,4 +42,10 @@
             </div>
         {% endfor %}
     </div>
+    <div class="p-3 mx-7">
+        <button type="button" onclick="history.back();" class="px-6 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-indigo-700 hover:text-white focus:outline-none">
+            Повернутися
+        </button>
+    </div>
+</div>
 {% endblock %}
