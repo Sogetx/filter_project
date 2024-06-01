@@ -185,6 +185,12 @@
                                         <div class="text-gray-500">{{ reply.created_at }}</div>
                                     </div>
                                     <p class="text-gray-800 ml-4">{{ reply.text }}</p>
+                                    {% if request.user.is_staff %}
+                                        <form method="post" action="{% url 'delete_reply' reply.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="text-red-500 font-bold py-1 px-2">Видалити</button>
+                                        </form>
+                                    {% endif %}
                                 {% endfor %}
                             </div>
                             {% if request.user.is_authenticated %}
