@@ -31,7 +31,7 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
   </head>
   <body>
-    <div class="container my-5 w-25">
+    <div class="container my-5 w-25 shadow-md rounded-xl bg-white p-6">
         <form method="post" class="login" action="{% url 'account_login' %}">
             {% csrf_token %}
             <div class="form-outline mb-4">

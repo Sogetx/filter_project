@@ -20,7 +20,7 @@
                                          <h2 class="text-2xl"><a href="{% url 'configurator_by_category' category.id %}" class="text-indigo-600 hover:text-indigo-900">{{ category.name }}</a></h2>
                                           <p>Number of Items: {{ category.num_items }}</p>
                                                 {% if category.heatattention %}
-                                                        <span class="text-red-500"> Деяке обладнання потребує встановлення охолоджувальної камери. </span>
+                                                        <span class="text-red-500"> Деяке обладнання потребує встановлення теплообміннику. </span>
                                                 {% endif %}
                                     </div>
                                 </a>
@@ -44,7 +44,7 @@
                                                 <div>
                                                     {% if item.heatattention %}
                                                         <div class="alert alert-warning">
-                                                            <h2 class="text-red-500"> Потрібно встановити охолоджувальну камеру. </h2>
+                                                            <h2 class="text-red-500"> Потрібно встановити теплообмінник. </h2>
                                                         </div>
                                                     {% endif %}
                                                     <p class="text-gray-500">Price: {{ item.price }}</p>

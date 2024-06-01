@@ -40,9 +40,8 @@
     display: block;
 }
 
-/* Поле тексту */
 .comment-form .mt-4 {
-    margin-top: 10px; /* Зменшено відстань від рейтингу до поля тексту */
+    margin-top: 10px; 
 }
 
 .comment-form textarea {
@@ -50,34 +49,8 @@
     padding: 10px;
     border: 3px solid #ccc;
     border-radius: 5px;
-    margin-top: 10px; /* Додано відстань від рейтингу до поля тексту */
+    margin-top: 10px; /
 }
-
-.comment_rating {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.comment_rating label {
-    float: right;
-    cursor: default;
-    font-size: 24px;
-    color: #ccc;
-    margin-right: 5px;
-}
-
-
-
-.comment_rating {
-    font-size: 24px; /* Розмір зірок */
-    color: #ccc; /* Колір за замовчуванням */
-}
-
-.comment_rating .checked {
-    color: #f9df4a; /* Колір для вибраних зірок */
-}
-
 
  </style>
 
@@ -212,6 +185,12 @@
                                         <div class="text-gray-500">{{ reply.created_at }}</div>
                                     </div>
                                     <p class="text-gray-800 ml-4">{{ reply.text }}</p>
+                                    {% if request.user.is_staff %}
+                                        <form method="post" action="{% url 'delete_reply' reply.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="text-red-500 font-bold py-1 px-2">Видалити</button>
+                                        </form>
+                                    {% endif %}
                                 {% endfor %}
                             </div>
                             {% if request.user.is_authenticated %}

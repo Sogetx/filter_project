@@ -133,6 +133,9 @@ def items_filter(request):  # пошук товарів
     if query:
         items = items.filter(Q(name__icontains=query) | Q(description__icontains=query))
 
+    if not sort_by:
+        sort_by = 'name_asc'
+
     if sort_by == 'name_asc':
         items = items.order_by('name')
 

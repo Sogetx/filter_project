@@ -31,7 +31,7 @@
   </head>
 <body>
     {% url 'account_signup' as action_url %}
-    <div class="container my-5 w-25">
+    <div class="container my-5 w-25 shadow-md rounded-xl bg-white p-6">
         <form method="post" class="login" action="{{ action_url }}">
             {% csrf_token %}
             

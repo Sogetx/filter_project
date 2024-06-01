@@ -21,6 +21,7 @@ urlpatterns = [
     path('account/change-email/', views.account_change_email, name='account_change_email'),
     path('reply_to_comment/<int:comment_id>/', views.reply_to_comment, name='reply_to_comment'),
     path('delete_comment/<int:comment_id>/', views.delete_comment, name='delete_comment'),
+    path('delete_reply/<int:reply_id>/', views.delete_reply, name='delete_reply'),
     path('order_pdf/', views.order_pdf, name='order_pdf'),
 
 ]
